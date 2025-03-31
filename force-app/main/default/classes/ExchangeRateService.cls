@@ -38,14 +38,14 @@ public class ExchangeRateService {
     // TODO: Implement the method to process rates and create/update records
     List<Exchange_Rate__c> exRateLst = new List<Exchange_Rate__c>();
 
-    if (rateData == null) {
+    if (rateData != null) {
       exRateLst = ExchangeRateWrapper.toExchangeRates(rateData);
 
       if (exRateLst.size() > 0) {
         try {
           upsert exRateLst;
         } catch (Exception e) {
-          System.debug('Error processing rates: ' + e.getMessage());
+          System.debug('Should have thrown an exception');
         }
       }
     }
@@ -61,15 +61,15 @@ public class ExchangeRateService {
     // 1. Call getLatestRates to retrieve the data
     // 2. Call processRates to create/update records
     // 3. Return the processed records
-
-    List<Exchange_Rate__c> exRateLst = ExchangeRateWrapper.toExchangeRates(
-      getLatestRates()
-    );
-    if (exRateLst.size() > 0) {
-      try {
-        upsert exRateLst;
-      } catch (Exception e) {
-        System.debug('Error processing rates: ' + e.getMessage());
+    List<Exchange_Rate__c> exRateLst = new List<Exchange_Rate__c>();
+    if (getLatestRates() != null) {
+      exRateLst = ExchangeRateWrapper.toExchangeRates(getLatestRates());
+      if (exRateLst.size() > 0) {
+        try {
+          upsert exRateLst;
+        } catch (Exception e) {
+          System.debug('Should have thrown an exception');
+        }
       }
     }
     return exRateLst;

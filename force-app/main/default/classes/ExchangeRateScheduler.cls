@@ -12,6 +12,10 @@ global class ExchangeRateScheduler implements Schedulable {
     // 1. Call ExchangeRateService.updateExchangeRates()
     // 2. Add error handling
     // 3. Consider adding logging if available
-    ExchangeRateService.updateExchangeRates();
+    try {
+      ExchangeRateService.updateExchangeRates();
+    } catch (Exception e) {
+      System.debug('Error occurred while updating exchange rates');
+    }
   }
 }
